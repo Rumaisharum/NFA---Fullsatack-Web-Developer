@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas Tabel - Jadwal Kuliah</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif
+            background-color: #ffffff;
+            margin: 20px;
+        }
+
+        .info {
+            text-align: left;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 2px solid #555;
+        }
+
+        th, td {
+            border: 1px solid #555;
+            padding: 10px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        /* Warna Header */
+        th {
+            background-color: #a0a0a0;
+            color: #000;
+            font-weight: bold;
+        }
+
+        /* Warna Kolom HARI */
+        .hari {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        /* Warna Kolom RUANG */
+        .ruang {
+            background-color: #f9f9f9;
+        }
+
+        /* Warna Footer */
+        .footer-table {
+            background-color: #a0a0a0;
+            font-weight: bold;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Tugas dibuat oleh -->
+    <div class="info">
+        Nama: Rumaisha <br>
+        NIM: 0110224087 <br>
+        Kampus: STT Terpadu Nurul Fikri
+    </div>
+
+    <h1>Jadwal Kuliah</h1>
+
+    <table>
+         <!-- Header -->
+         <tr>
+            <th>HARI</th>
+            <th>JAM</th>
+            <th>MATA KULIAH</th>
+            <th>DOSEN</th>
+            <th>RUANG</th>
+         </tr>
+
+         <!-- SENIN -->
+         <tr>
+            <td rowspan="2" class="hari">SENIN</td>
+            <td>08.00 - 10.00</td>
+            <td>Kajian Islam</td>
+            <td>Ust. Anwar Nashidin, Lc.</td>
+            <td rowspan="2" class="ruang">Ruang Teori</td>
+         </tr>
+         <tr>
+            <td>10.00 - 12.00</td>
+            <td>Aplikasi Perkantoran</td>
+            <td>Drs. MGS Hendri, M.M</td>
+         </tr>
+
+         <!-- SELASA -->
+         <tr>
+            <td rowspan="2" class="hari">SELASA</td>
+            <td>08.00 - 10.00</td>
+            <td>Linux Fundamental</td>
+            <td>Henry Saptono, S.Si, M.Kom</td>
+            <td rowspan="4" class="ruang">Ruang I</td>
+         </tr>
+         <tr>
+            <td>10.00 - 12.00</td>
+            <td>Html, Css & Javascript</td>
+            <td rowspan="3">Sirojul Munir, S.Si, M.Kom</td>
+         </tr>
+
+         <!-- RABU -->
+         <tr>
+            <td rowspan="2" class="hari">RABU</td>
+            <td>08.00 - 10.00</td>
+            <td>Basis Data</td>
+         </tr>
+         <tr>
+            <td>10.00 - 12.00</td>
+            <td>Algoritma dan Pemograman</td>
+         </tr>
+
+         <!-- KAMIS -->
+         <tr>
+            <td rowspan="2" class="hari">KAMIS</td>
+            <td>08.00 - 10.00</td>
+            <td>Kewirausahaan & Pengembangan Diri</td>
+            <td>Khoirul Umam, S.Pd</td>
+            <td rowspan="2" class="ruang">Ruang Teori</td>
+         </tr>
+         <tr>
+            <td>10.00 - 12.00</td>
+            <td>Bahasa Inggris</td>
+            <td>Drs. Mahfudz</td>
+         </tr>
+
+         <!-- FOOTER -->
+         <tr>
+            <td colspan="5" class="footer-table">JADWAL DAPAT BERUBAH SEWAKTU-WAKTU</td>
+         </tr>
+    </table>
+
+</body>
+</html>
