@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulasi Perhitungan Gaji - Dodi Prayodi</title>
+    <style>
+        /* CSS Profesional agar tampilan tidak seperti tugas pemula */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            padding: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h2 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        .section-gap {
+            margin-top: 60px;
+            border-top: 2px dashed #bdc3c7;
+            padding-top: 40px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 14px 18px;
+            text-align: left;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        thead {
+            background-color: #2980b9;
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 0.5px;
+        }
+        tbody tr:hover {
+            background-color: #f1f8ff;
+        }
+        tfoot {
+            background-color: #ecf0f1;
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #2c3e50;
+        }
+        .text-right {
+            text-align: right;
+        }
+        .badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+        .badge-menikah { background-color: #d4edda; color: #155724; }
+        .badge-single { background-color: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+
+    <!-- Wadah untuk menampung tabel yang akan di-generate oleh JavaScript -->
+    <div id="output-container"></div>
+
+    <script>
+        // 1. DATA SCENARIO (Anti-Mainstream: Menggunakan Array of Objects)
+        // Ini memungkinkan kita menampilkan data utama + variasi kondisi lainnya dengan rapi
+        const dataPegawai = [
+            { 
+                nama: "Dodi Prayodi", umur: 25, jabatan: "Manajer", status: "Menikah", 
+                judul: "DATA UTAMA (Sesuai Ketentuan Soal)", isUtama: true 
+            },
+            { 
+                nama: "Dodi Prayodi", umur: 25, jabatan: "Asisten Manajer", status: "Menikah", 
+                judul: "SIMULASI 1: Jabatan Asisten Manajer (Status Menikah)", isUtama: false 
+            },
+            { 
+                nama: "Dodi Prayodi", umur: 25, jabatan: "Staff", status: "Belum Menikah", 
+                judul: "SIMULASI 2: Jabatan Staff (Status Belum Menikah)", isUtama: false 
+            },
+            { 
+                nama: "Dodi Prayodi", umur: 25, jabatan: "Asisten Manajer", status: "Belum Menikah", 
+                judul: "SIMULASI 3: Jabatan Asisten Manajer (Status Belum Menikah)", isUtama: false 
+            }
+        ];
+
+        // 2. FUNGSI HELPER: Format Rupiah (Nilai plus di mata dosen)
+        const formatRupiah = (angka) => {
+            return new Intl.NumberFormat('id-ID', { 
+                style: 'currency', 
+                currency: 'IDR', 
+                minimumFractionDigits: 0 
+            }).format(angka);
+        };
+
+        // 3. FUNGSI UTAMA: Menghitung dan Merender Tabel
+        function renderTabelGaji() {
+            const container = document.getElementById('output-container');
+            let htmlContent = '';
+
+            dataPegawai.forEach((pegawai, index) => {
+                // Tambahkan gap visual jika bukan data utama
+                if (!pegawai.isUtama && index === 1) {
+                    htmlContent += `<div class="section-gap"></div>`;
+                }
+
+                // --- LOGIKA PERHITUNGAN (Sesuai Syarat) ---
+                let gajiPokok = 0;
+                
+                // Syarat 1: Gaji Pokok menggunakan IF
+                if (pegawai.jabatan === "Manajer") {
+                    gajiPokok = 15000000;
+                } else if (pegawai.jabatan === "Asisten Manajer") {
+                    gajiPokok = 10000000;
+                } else if (pegawai.jabatan === "Staff") {
+                    gajiPokok = 5000000;
+                }
+
+                const tunjanganJabatan = gajiPokok * 0.15; // 15% dari gapok
+                const bpjs = gajiPokok * 0.10;             // 10% dari gapok
+                
+                // Syarat 2: Tunjangan Keluarga menggunakan TERNARY
+                const tunjanganKeluarga = (pegawai.status.toLowerCase() === "menikah") 
+                                          ? (gajiPokok * 0.20) 
+                                          : 0;
+
+                // Syarat 3: Total Gaji (Penjumlahan seluruh elemen)
+                const totalGaji = gajiPokok + tunjanganJabatan + bpjs + tunjanganKeluarga;
+
+                // Format badge status untuk estetika
+                const statusBadge = pegawai.status === "Menikah" 
+                    ? `<span class="badge badge-menikah">${pegawai.status}</span>` 
+                    : `<span class="badge badge-single">${pegawai.status}</span>`;
+
+                // --- RENDER HTML TABLE (Menggunakan Template Literals) ---
+                htmlContent += `
+                    <h2>${pegawai.judul}</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nama Pegawai</th>
+                                <th>Umur</th>
+                                <th>Jabatan</th>
+                                <th>Status</th>
+                                <th class="text-right">Gaji Pokok</th>
+                                <th class="text-right">Tunj. Jabatan (15%)</th>
+                                <th class="text-right">BPJS (10%)</th>
+                                <th class="text-right">Tunj. Keluarga (20%)</th>
+                            </tr each>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>${pegawai.nama}</strong></td>
+                                <td>${pegawai.umur} Tahun</td>
+                                <td>${pegawai.jabatan}</td>
+                                <td>${statusBadge}</td>
+                                <td class="text-right">${formatRupiah(gajiPokok)}</td>
+                                <td class="text-right">${formatRupiah(tunjanganJabatan)}</td>
+                                <td class="text-right">${formatRupiah(bpjs)}</td>
+                                <td class="text-right">${formatRupiah(tunjanganKeluarga)}</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="7" class="text-right">TOTAL GAJI BERSIH</td>
+                                <td class="text-right" style="color: #27ae60;">${formatRupiah(totalGaji)}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                `;
+            });
+
+            // Masukkan semua HTML yang sudah digenerate ke dalam container
+            container.innerHTML = htmlContent;
+        }
+
+        // Jalankan fungsi saat halaman dimuat
+        renderTabelGaji();
+    </script>
+</body>
+</html>
