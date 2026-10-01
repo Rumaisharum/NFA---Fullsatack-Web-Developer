@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Pesanan Toko Online - Rumaisha</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            padding: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .success {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .delete {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🛒 Sistem Manajemen Pesanan Toko Online</h1>
+
+    <div id="output"></div>
+
+    <script>
+        // ============================================
+        // 1. DEKLARASI ARRAY PRODUK (Array of Objects)
+        // ============================================
+        // Sesuai materi PDF 3.1: Array bisa berisi objek dengan key-value pair
+        let produkToko = [
+            { id: 1, nama: "Laptop", harga: 7000000, stok: 5 },
+            { id: 2, nama: "Mouse", harga: 200000, stok: 10 },
+            { id: 3, nama: "Keyboard", harga: 350000, stok: 7 }
+        ];
+
+        // ============================================
+        // 2. FUNGSI TAMBAH PRODUK
+        // ============================================
+        // Menggunakan Function Declaration (PDF 3.2)
+        // Parameter: nama, harga, stok
+        // Method array: push() untuk menambah elemen di akhir array
+        function tambahProduk(nama, harga, stok) {
+            // Cari ID terbesar saat ini, lalu tambah 1 untuk ID baru
+            let idBaru = produkToko.length > 0 ? produkToko[produkToko.length - 1].id + 1 : 1;
+            
+            // Buat objek produk baru
+            let produkBaru = {
+                id: idBaru,
+                nama: nama,
+                harga: harga,
+                stok: stok
+            };
+            
+            // Tambahkan ke array menggunakan method push()
+            produkToko.push(produkBaru);
+            
+            return `✅ Produk "${nama}" berhasil ditambahkan dengan ID: ${idBaru}`;
+        }
+
+        // ============================================
+        // 3. FUNGSI HAPUS PRODUK
+        // ============================================
+        // Menggunakan Function Declaration
+        // Method array: filter() untuk menyaring elemen (PDF 3.1)
+        function hapusProduk(id) {
+            // Cari produk yang akan dihapus untuk pesan konfirmasi
+            let produkDihapus = produkToko.find(p => p.id === id);
+            
+            if (produkDihapus) {
+                // Filter array: simpan semua produk KECUALI yang ID-nya sama
+                // Sesuai materi: filter() menghasilkan array baru
+                produkToko = produkToko.filter(p => p.id !== id);
+                return `🗑️ Produk "${produkDihapus.nama}" (ID: ${id}) berhasil dihapus`;
+            } else {
+                return `❌ Produk dengan ID ${id} tidak ditemukan`;
+            }
+        }
+
+        // ============================================
+        // 4. FUNGSI TAMPILKAN PRODUK
+        // ============================================
+        // Menggunakan Function Declaration
+        // Method array: forEach() untuk looping (PDF 3.1)
+        function tampilkanProduk() {
+            // Cek apakah array kosong
+            if (produkToko.length === 0) {
+                return "<p>Tidak ada produk dalam toko.</p>";
+            }
+
+            // Mulai buat tabel HTML
+            let html = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nama Produk</th>
+                            <th>Harga (Rp)</th>
+                            <th>Stok</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            // Looping menggunakan forEach (sesuai materi PDF 3.1)
+            // Parameter: item (objek produk), index (urutan)
+            produkToko.forEach(function(item, index) {
+                // Format harga dengan pemisah ribuan
+                let hargaFormat = item.harga.toLocaleString('id-ID');
+                
+                html += `
+                    <tr>
+                        <td>${item.id}</td>
+                        <td>${item.nama}</td>
+                        <td>Rp ${hargaFormat}</td>
+                        <td>${item.stok} unit</td>
+                    </tr>
+                `;
+            });
+
+            // Tutup tabel
+            html += `
+                    </tbody>
+                </table>
+                <p><strong>Total Produk:</strong> ${produkToko.length} item</p>
+            `;
+
+            return html;
+        }
+
+        // ============================================
+        // 5. FUNGSI BANTU: FORMAT RUPIAH
+        // ============================================
+        // Menggunakan Arrow Function (PDF 3.2 - ES6)
+        // Sesuai materi: arrow function lebih ringkas
+        const formatRupiah = (angka) => {
+            return "Rp " + angka.toLocaleString('id-ID');
+        };
+
+        // ============================================
+        // 6. DEMO PENGGUNAAN SISTEM
+        // ============================================
+        // Menampilkan hasil ke halaman web
+        let output = document.getElementById('output');
+        let htmlContent = "";
+
+        // --- DEMO 1: Tampilkan produk awal ---
+        htmlContent += "<div class='section'>";
+        htmlContent += "<h2>📦 Daftar Produk Awal</h2>";
+        htmlContent += tampilkanProduk();
+        htmlContent += "</div>";
+
+        // --- DEMO 2: Tambah produk baru ---
+        htmlContent += "<div class='section'>";
+        htmlContent += "<h2>➕ Menambahkan Produk Baru</h2>";
+        
+        let pesanTambah1 = tambahProduk("Monitor", 1500000, 8);
+        htmlContent += `<p class="success">${pesanTambah1}</p>`;
+        
+        let pesanTambah2 = tambahProduk("Headset", 450000, 15);
+        htmlContent += `<p class="success">${pesanTambah2}</p>`;
+        
+        htmlContent += "<h3>Daftar Produk Setelah Penambahan:</h3>";
+        htmlContent += tampilkanProduk();
+        htmlContent += "</div>";
+
+        // --- DEMO 3: Hapus produk ---
+        htmlContent += "<div class='section'>";
+        htmlContent += "<h2>🗑️ Menghapus Produk</h2>";
+        
+        let pesanHapus1 = hapusProduk(2); // Hapus Mouse (ID: 2)
+        htmlContent += `<p class="delete">${pesanHapus1}</p>`;
+        
+        let pesanHapus2 = hapusProduk(99); // Coba hapus ID yang tidak ada
+        htmlContent += `<p>${pesanHapus2}</p>`;
+        
+        htmlContent += "<h3>Daftar Produk Setelah Penghapusan:</h3>";
+        htmlContent += tampilkanProduk();
+        htmlContent += "</div>";
+
+        // --- DEMO 4: Tampilkan semua produk akhir ---
+        htmlContent += "<div class='section'>";
+        htmlContent += "<h2>📊 Daftar Produk Final</h2>";
+        htmlContent += tampilkanProduk();
+        htmlContent += "</div>";
+
+        // Tampilkan semua ke halaman
+        output.innerHTML = htmlContent;
+
+        // Tampilkan di console juga (untuk debugging)
+        console.log("=== SISTEM MANAJEMEN TOKO ONLINE ===");
+        console.log("Produk awal:", produkToko);
+    </script>
+</body>
+</html>
