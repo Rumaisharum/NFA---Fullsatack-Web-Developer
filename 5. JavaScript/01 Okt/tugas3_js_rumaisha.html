@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Manajemen Pesanan Toko Online - Rumaisha</title>
+    <title>Sistem Manajemen Pesanan Toko Online</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -65,20 +65,14 @@
     <div id="output"></div>
 
     <script>
-        // ============================================
         // 1. DEKLARASI ARRAY PRODUK (Array of Objects)
-        // ============================================
-        // Sesuai materi PDF 3.1: Array bisa berisi objek dengan key-value pair
         let produkToko = [
             { id: 1, nama: "Laptop", harga: 7000000, stok: 5 },
             { id: 2, nama: "Mouse", harga: 200000, stok: 10 },
             { id: 3, nama: "Keyboard", harga: 350000, stok: 7 }
         ];
 
-        // ============================================
         // 2. FUNGSI TAMBAH PRODUK
-        // ============================================
-        // Menggunakan Function Declaration (PDF 3.2)
         // Parameter: nama, harga, stok
         // Method array: push() untuk menambah elemen di akhir array
         function tambahProduk(nama, harga, stok) {
@@ -99,11 +93,9 @@
             return `✅ Produk "${nama}" berhasil ditambahkan dengan ID: ${idBaru}`;
         }
 
-        // ============================================
         // 3. FUNGSI HAPUS PRODUK
-        // ============================================
         // Menggunakan Function Declaration
-        // Method array: filter() untuk menyaring elemen (PDF 3.1)
+        // Method array: filter() untuk menyaring elemen
         function hapusProduk(id) {
             // Cari produk yang akan dihapus untuk pesan konfirmasi
             let produkDihapus = produkToko.find(p => p.id === id);
@@ -118,18 +110,15 @@
             }
         }
 
-        // ============================================
         // 4. FUNGSI TAMPILKAN PRODUK
-        // ============================================
         // Menggunakan Function Declaration
-        // Method array: forEach() untuk looping (PDF 3.1)
+        // Method array: forEach() untuk looping 
         function tampilkanProduk() {
             // Cek apakah array kosong
             if (produkToko.length === 0) {
                 return "<p>Tidak ada produk dalam toko.</p>";
             }
 
-            // Mulai buat tabel HTML
             let html = `
                 <table>
                     <thead>
@@ -143,7 +132,7 @@
                     <tbody>
             `;
 
-            // Looping menggunakan forEach (sesuai materi PDF 3.1)
+            // Looping menggunakan forEach 
             // Parameter: item (objek produk), index (urutan)
             produkToko.forEach(function(item, index) {
                 // Format harga dengan pemisah ribuan
@@ -169,18 +158,14 @@
             return html;
         }
 
-        // ============================================
         // 5. FUNGSI BANTU: FORMAT RUPIAH
-        // ============================================
-        // Menggunakan Arrow Function (PDF 3.2 - ES6)
-        // Sesuai materi: arrow function lebih ringkas
+        // Menggunakan Arrow Function 
+        // arrow function lebih ringkas
         const formatRupiah = (angka) => {
             return "Rp " + angka.toLocaleString('id-ID');
         };
 
-        // ============================================
         // 6. DEMO PENGGUNAAN SISTEM
-        // ============================================
         // Menampilkan hasil ke halaman web
         let output = document.getElementById('output');
         let htmlContent = "";
