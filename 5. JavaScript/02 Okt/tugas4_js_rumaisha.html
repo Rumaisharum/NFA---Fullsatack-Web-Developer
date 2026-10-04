@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Manajemen Transportasi</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            padding: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .card h2 {
+            color: #2980b9;
+            margin-top: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f1f8ff;
+        }
+        .empty-msg {
+            text-align: center;
+            color: #7f8c8d;
+            font-style: italic;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🚗 Sistem Manajemen Transportasi</h1>
+    <div id="output-container"></div>
+
+    <script>
+        // 1. CLASS KENDARAAN (Objek yang disewa)
+        class Kendaraan {
+            constructor(jenis, platNomor) {
+                this.jenis = jenis;
+                this.platNomor = platNomor;
+            }
+        }
+
+        // 2. CLASS PELANGGAN (Sesuai instruksi tugas)
+        class Pelanggan {
+            // Properti: nama, nomorTelepon, dan kendaraanDisewa
+            constructor(nama, nomorTelepon) {
+                this.nama = nama;
+                this.nomorTelepon = nomorTelepon;
+                this.kendaraanDisewa = null; // Default belum menyewa
+            }
+
+            // Metode untuk mencatat transaksi penyewaan kendaraan
+            sewaKendaraan(kendaraan) {
+                this.kendaraanDisewa = kendaraan;
+                console.log(`[Transaksi] ${this.nama} berhasil menyewa ${this.kendaraanDisewa.jenis} (${this.kendaraanDisewa.platNomor}).`);
+            }
+        }
+
+        // 3. CLASS SISTEM MANAJEMEN (Untuk mengelola data)
+        class SistemManajemen {
+            constructor() {
+                this.daftarPelanggan = [];
+            }
+
+            // Metode untuk menambahkan pelanggan ke dalam sistem
+            tambahPelanggan(pelanggan) {
+                this.daftarPelanggan.push(pelanggan);
+            }
+
+            // Metode untuk menampilkan daftar pelanggan yang SEDANG menyewa
+            tampilkanDaftarPenyewa() {
+                // Filter hanya pelanggan yang kendaraanDisewa-nya tidak null
+                const penyewaAktif = this.daftarPelanggan.filter(p => p.kendaraanDisewa !== null);
+
+                let html = `
+                    <div class="card">
+                        <h2>📋 Daftar Pelanggan yang Sedang Menyewa</h2>
+                `;
+
+                if (penyewaAktif.length === 0) {
+                    html += `<p class="empty-msg">Tidak ada pelanggan yang sedang menyewa kendaraan saat ini.</p>`;
+                } else {
+                    html += `
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Pelanggan</th>
+                                    <th>Nomor Telepon</th>
+                                    <th>Kendaraan yang Disewa</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    `;
+
+                    penyewaAktif.forEach((p, index) => {
+                        html += `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td><strong>${p.nama}</strong></td>
+                                <td>${p.nomorTelepon}</td>
+                                <td>${p.kendaraanDisewa.jenis} <br><small style="color:#7f8c8d;">${p.kendaraanDisewa.platNomor}</small></td>
+                            </tr>
+                        `;
+                    });
+
+                    html += `
+                            </tbody>
+                        </table>
+                    `;
+                }
+                
+                html += `</div>`;
+                return html;
+            }
+        }
+
+        // 4. SIMULASI PENGGUNAAN SISTEM (Demo)
+        
+        // Inisialisasi sistem
+        const sistem = new SistemManajemen();
+
+        // Membuat objek kendaraan
+        const mobil1 = new Kendaraan("Toyota Avanza", "B 1234 CD");
+        const motor1 = new Kendaraan("Honda Vario", "B 5678 EF");
+        const mobil2 = new Kendaraan("Daihatsu Xenia", "B 9012 GH");
+
+        // Membuat objek pelanggan
+        const pelanggan1 = new Pelanggan("Budi Santoso", "0812-3456-7890");
+        const pelanggan2 = new Pelanggan("Siti Aminah", "0813-9876-5432");
+        const pelanggan3 = new Pelanggan("Andi Pratama", "0857-1122-3344");
+
+        // Menambahkan pelanggan ke dalam sistem
+        sistem.tambahPelanggan(pelanggan1);
+        sistem.tambahPelanggan(pelanggan2);
+        sistem.tambahPelanggan(pelanggan3);
+
+        // Mencatat transaksi penyewaan (Hanya Budi dan Andi yang menyewa)
+        pelanggan1.sewaKendaraan(mobil1);
+        pelanggan3.sewaKendaraan(motor1);
+        // Siti Aminah tidak menyewa apapun (kendaraanDisewa tetap null)
+
+        // Menampilkan hasil ke halaman web
+        const outputContainer = document.getElementById('output-container');
+        outputContainer.innerHTML = sistem.tampilkanDaftarPenyewa();
+
+        // Menampilkan log di console untuk pembuktian metode bekerja
+        console.log("--- Log Sistem Manajemen Transportasi ---");
+        console.log("Total Pelanggan Terdaftar:", sistem.daftarPelanggan.length);
+        console.log("Total Penyewa Aktif:", sistem.daftarPelanggan.filter(p => p.kendaraanDisewa !== null).length);
+
+    </script>
+</body>
+</html>
