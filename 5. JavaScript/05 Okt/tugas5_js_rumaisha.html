@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajemen Produk Toko Online - Rumaisha</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .form-group {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .produk-item {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .produk-info h3 {
+            margin: 0 0 5px 0;
+            color: #2c3e50;
+        }
+        .produk-info p {
+            margin: 3px 0;
+            color: #7f8c8d;
+        }
+        .hapus-btn {
+            background-color: #e74c3c;
+        }
+        .hapus-btn:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <h1>🛒 Manajemen Produk Toko Online</h1>
+    
+    <div class="form-group">
+        <h2>Tambah Produk Baru</h2>
+        <input type="number" id="inputId" placeholder="ID Produk">
+        <input type="text" id="inputNama" placeholder="Nama Produk">
+        <input type="number" id="inputHarga" placeholder="Harga Produk">
+        <button id="btnTambah">Tambah Produk</button>
+    </div>
+
+    <div class="form-group">
+        <h2>Daftar Produk</h2>
+        <button id="btnTampil">Tampilkan Semua Produk</button>
+        <div id="daftarProduk"></div>
+    </div>
+
+    <script>
+        // Data produk awal (minimal 5)
+        let produkList = [
+            { id: 1, nama: "Laptop", harga: 12000000 },
+            { id: 2, nama: "Smartphone", harga: 5000000 },
+            { id: 3, nama: "Tablet", harga: 3500000 },
+            { id: 4, nama: "Headphone", harga: 750000 },
+            { id: 5, nama: "Mouse", harga: 150000 }
+        ];
+
+        // Fungsi menambah produk dengan Spread Operator
+        function tambahProduk(id, nama, harga) {
+            const produkBaru = { id, nama, harga };
+            produkList = [...produkList, produkBaru];
+            console.log("Produk berhasil ditambahkan:", produkBaru);
+        }
+
+        // Fungsi menghapus produk dengan Rest Parameter
+        function hapusProduk(id) {
+            produkList = produkList.filter(p => p.id !== id);
+            console.log("Produk dengan ID", id, "berhasil dihapus");
+        }
+
+        // Fungsi menampilkan produk dengan Destructuring
+        function tampilkanProduk() {
+            const container = document.getElementById('daftarProduk');
+            container.innerHTML = '';
+
+            produkList.forEach(produk => {
+                const { id, nama, harga } = produk; // Destructuring
+                
+                const produkDiv = document.createElement('div');
+                produkDiv.className = 'produk-item';
+                produkDiv.innerHTML = `
+                    <div class="produk-info">
+                        <h3>${nama}</h3>
+                        <p>ID: ${id}</p>
+                        <p>Harga: Rp${harga.toLocaleString('id-ID')}</p>
+                    </div>
+                    <button class="hapus-btn" onclick="hapusProduk(${id})">Hapus</button>
+                `;
+                container.appendChild(produkDiv);
+            });
+
+            console.log("Total produk:", produkList.length);
+        }
+
+        // Event Listener untuk tombol tambah
+        document.getElementById('btnTambah').addEventListener('click', function() {
+            const id = parseInt(document.getElementById('inputId').value);
+            const nama = document.getElementById('inputNama').value;
+            const harga = parseInt(document.getElementById('inputHarga').value);
+
+            if (id && nama && harga) {
+                tambahProduk(id, nama, harga);
+                tampilkanProduk();
+                
+                // Clear input
+                document.getElementById('inputId').value = '';
+                document.getElementById('inputNama').value = '';
+                document.getElementById('inputHarga').value = '';
+            } else {
+                alert("Mohon isi semua field!");
+            }
+        });
+
+        // Event Listener untuk tombol tampil
+        document.getElementById('btnTampil').addEventListener('click', tampilkanProduk);
+
+        // Tampilkan produk saat halaman pertama kali dimuat
+        tampilkanProduk();
+    </script>
+</body>
+</html>
