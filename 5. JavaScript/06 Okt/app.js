@@ -1,3 +1,6 @@
+// TUGAS 6: APP 
+// Mengeksekusi semua perintah
+
 // Import fungsi dari controller.js
 import { lihatData, tambahData, hapusData } from "./controller.js";
 
@@ -10,15 +13,15 @@ lihatData();
 tambahData({ 
     nama: "Rumaisha", 
     umur: 20, 
-    alamat: "Jl. NF Academy No. 11", 
+    alamat: "Jl. kedondong", 
     email: "rumaisha@sttnf.ac.id" 
 });
 
 tambahData({ 
-    nama: "Mentor Keren", 
+    nama: "risma", 
     umur: 28, 
-    alamat: "Jl. Fullstack No. 12", 
-    email: "mentor@nfacademy.id" 
+    alamat: "Jl. Ampera", 
+    email: "risma@nfacademy.id" 
 });
 
 console.log("\n--- SETELAH PENAMBAHAN DATA ---");

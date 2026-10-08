@@ -1,3 +1,6 @@
+// TUGAS 6: CONTROLLER
+// Berisi 3 perintah: Melihat, Menambah, Menghapus data
+
 // Import data dari file data.js
 import users from "./data.js";
 
@@ -22,7 +25,7 @@ const hapusData = (namaUser) => {
     // Mencari index data yang akan dihapus
     const index = users.findIndex(u => u.nama === namaUser);
     if (index !== -1) {
-        users.splice(index, 1); // Menghapus 1 data pada index tersebut
+        users.splice(index, 1);
         console.log(`[Berhasil] Data "${namaUser}" berhasil dihapus.`);
     } else {
         console.log(`[Gagal] Data "${namaUser}" tidak ditemukan.`);

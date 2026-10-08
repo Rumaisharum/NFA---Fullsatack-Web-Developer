@@ -3,190 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulasi Perhitungan Gaji - Dodi Prayodi</title>
+    <title>Tugas 2 JavaScript - Data Pegawai</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
-            padding: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #27ae60;
+            padding-bottom: 10px;
+        }
+        .section {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         h2 {
-            color: #2c3e50;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
-            margin-top: 40px;
-        }
-        .section-gap {
-            margin-top: 60px;
-            border-top: 2px dashed #bdc3c7;
-            padding-top: 40px;
+            color: #27ae60;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            background: white;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 20px;
+            margin: 15px 0;
         }
         th, td {
-            padding: 14px 18px;
+            padding: 12px;
+            border: 1px solid #ddd;
             text-align: left;
-            border-bottom: 1px solid #ecf0f1;
         }
-        thead {
-            background-color: #2980b9;
+        thead th {
+            background: #27ae60;
             color: white;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.9em;
-            letter-spacing: 0.5px;
         }
-        tbody tr:hover {
-            background-color: #f1f8ff;
+        tbody tr:nth-child(even) {
+            background: #f9f9f9;
         }
-        tfoot {
-            background-color: #ecf0f1;
+        tfoot td {
+            background: #e8f8f5;
             font-weight: bold;
             font-size: 1.1em;
-            color: #2c3e50;
         }
-        .text-right {
-            text-align: right;
+        .info {
+            background: #e8f8f5;
+            padding: 15px;
+            border-left: 4px solid #27ae60;
+            margin: 10px 0;
         }
-        .badge {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.85em;
-            font-weight: bold;
-        }
-        .badge-menikah { background-color: #d4edda; color: #155724; }
-        .badge-single { background-color: #f8d7da; color: #721c24; }
     </style>
 </head>
 <body>
+    <h1> Tugas 2 - Data Pegawai</h1>
 
-    <!-- Wadah untuk menampung tabel yang akan di-generate oleh JavaScript -->
-    <div id="output-container"></div>
+    <div class="section">
+        <h2>📋 Data Pegawai</h2>
+        <div class="info">
+            <p><strong>Nama Pegawai:</strong> Dodi</p>
+            <p><strong>Umur:</strong> 25 tahun</p>
+            <p><strong>Jabatan:</strong> Manajer</p>
+            <p><strong>Status:</strong> Menikah</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>💵 Perhitungan Gaji</h2>
+        <div id="output-tabel"></div>
+    </div>
 
     <script>
-        // 1. DATA SCENARIO (Anti-Mainstream: Menggunakan Array of Objects)
-        // Ini memungkinkan kita menampilkan data utama + variasi kondisi lainnya dengan rapi
-        const dataPegawai = [
-            { 
-                nama: "Dodi Prayodi", umur: 25, jabatan: "Manajer", status: "Menikah", 
-                judul: "DATA UTAMA (Sesuai Ketentuan Soal)", isUtama: true 
-            },
-            { 
-                nama: "Dodi Prayodi", umur: 25, jabatan: "Asisten Manajer", status: "Menikah", 
-                judul: "SIMULASI 1: Jabatan Asisten Manajer (Status Menikah)", isUtama: false 
-            },
-            { 
-                nama: "Dodi Prayodi", umur: 25, jabatan: "Staff", status: "Belum Menikah", 
-                judul: "SIMULASI 2: Jabatan Staff (Status Belum Menikah)", isUtama: false 
-            },
-            { 
-                nama: "Dodi Prayodi", umur: 25, jabatan: "Asisten Manajer", status: "Belum Menikah", 
-                judul: "SIMULASI 3: Jabatan Asisten Manajer (Status Belum Menikah)", isUtama: false 
-            }
-        ];
+        // TUGAS 2: DATA PEGAWAI DAN PERHITUNGAN GAJI
+        // Menggunakan Variabel, If, Ternary Operator
 
-        // 2. FUNGSI HELPER: Format Rupiah (Nilai plus di mata dosen)
-        const formatRupiah = (angka) => {
-            return new Intl.NumberFormat('id-ID', { 
-                style: 'currency', 
-                currency: 'IDR', 
-                minimumFractionDigits: 0 
-            }).format(angka);
-        };
+        // Deklarasi variabel data pegawai
+        let namaPegawai = "Dodi Prayodi";
+        let umurPegawai = 25;
+        let jabatanPegawai = "Manajer";
+        let statusPegawai = "Menikah";
 
-        // 3. FUNGSI UTAMA: Menghitung dan Merender Tabel
-        function renderTabelGaji() {
-            const container = document.getElementById('output-container');
-            let htmlContent = '';
+        // PERHITUNGAN GAJI POKOK MENGGUNAKAN IF
+        // Aturan: Manajer => 15 jt, Asisten Manajer => 10 jt, Staff => 5 jt
+        let gajiPokok;
 
-            dataPegawai.forEach((pegawai, index) => {
-                // Tambahkan gap visual jika bukan data utama
-                if (!pegawai.isUtama && index === 1) {
-                    htmlContent += `<div class="section-gap"></div>`;
-                }
-
-                // --- LOGIKA PERHITUNGAN (Sesuai Syarat) ---
-                let gajiPokok = 0;
-                
-                // Syarat 1: Gaji Pokok menggunakan IF
-                if (pegawai.jabatan === "Manajer") {
-                    gajiPokok = 15000000;
-                } else if (pegawai.jabatan === "Asisten Manajer") {
-                    gajiPokok = 10000000;
-                } else if (pegawai.jabatan === "Staff") {
-                    gajiPokok = 5000000;
-                }
-
-                const tunjanganJabatan = gajiPokok * 0.15; // 15% dari gapok
-                const bpjs = gajiPokok * 0.10;             // 10% dari gapok
-                
-                // Syarat 2: Tunjangan Keluarga menggunakan TERNARY
-                const tunjanganKeluarga = (pegawai.status.toLowerCase() === "menikah") 
-                                          ? (gajiPokok * 0.20) 
-                                          : 0;
-
-                // Syarat 3: Total Gaji (Penjumlahan seluruh elemen)
-                const totalGaji = gajiPokok + tunjanganJabatan + bpjs + tunjanganKeluarga;
-
-                // Format badge status untuk estetika
-                const statusBadge = pegawai.status === "Menikah" 
-                    ? `<span class="badge badge-menikah">${pegawai.status}</span>` 
-                    : `<span class="badge badge-single">${pegawai.status}</span>`;
-
-                // --- RENDER HTML TABLE (Menggunakan Template Literals) ---
-                htmlContent += `
-                    <h2>${pegawai.judul}</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Nama Pegawai</th>
-                                <th>Umur</th>
-                                <th>Jabatan</th>
-                                <th>Status</th>
-                                <th class="text-right">Gaji Pokok</th>
-                                <th class="text-right">Tunj. Jabatan (15%)</th>
-                                <th class="text-right">BPJS (10%)</th>
-                                <th class="text-right">Tunj. Keluarga (20%)</th>
-                            </tr each>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>${pegawai.nama}</strong></td>
-                                <td>${pegawai.umur} Tahun</td>
-                                <td>${pegawai.jabatan}</td>
-                                <td>${statusBadge}</td>
-                                <td class="text-right">${formatRupiah(gajiPokok)}</td>
-                                <td class="text-right">${formatRupiah(tunjanganJabatan)}</td>
-                                <td class="text-right">${formatRupiah(bpjs)}</td>
-                                <td class="text-right">${formatRupiah(tunjanganKeluarga)}</td>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="7" class="text-right">TOTAL GAJI BERSIH</td>
-                                <td class="text-right" style="color: #27ae60;">${formatRupiah(totalGaji)}</td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                `;
-            });
-
-            // Masukkan semua HTML yang sudah digenerate ke dalam container
-            container.innerHTML = htmlContent;
+        if (jabatanPegawai === "Manajer") {
+            gajiPokok = 15000000;
+        } else if (jabatanPegawai === "Asisten Manajer") {
+            gajiPokok = 10000000;
+        } else if (jabatanPegawai === "Staff") {
+            gajiPokok = 5000000;
+        } else {
+            gajiPokok = 0;
         }
 
-        // Jalankan fungsi saat halaman dimuat
-        renderTabelGaji();
+        // PERHITUNGAN TUNJANGAN JABATAN
+        // Tunjangan Jabatan: 15% dari gaji pokok
+        let tunjanganJabatan = gajiPokok * 0.15;
+
+        // PERHITUNGAN BPJS
+        // BPJS: 10% dari gaji pokok
+        let bpjs = gajiPokok * 0.10;
+
+        // PERHITUNGAN TUNJANGAN KELUARGA MENGGUNAKAN TERNARY
+        // Status menikah => 20% dari gaji pokok
+        let tunjanganKeluarga = (statusPegawai === "Menikah") ? (gajiPokok * 0.20) : 0;
+
+        // PERHITUNGAN TOTAL GAJI
+        // Total = Gaji Pokok + Tunjangan Jabatan + Tunjangan Keluarga - BPJS
+        let totalGaji = gajiPokok + tunjanganJabatan + tunjanganKeluarga - bpjs;
+
+        // MENAMPILKAN HASIL DALAM TABEL HTML
+        document.getElementById('output-tabel').innerHTML = `
+            <table>
+                <thead>
+                    <tr>
+                        <th>Komponen Gaji</th>
+                        <th>Jumlah (Rp)</th>
+                        <th>Keterangan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Gaji Pokok</strong></td>
+                        <td>Rp ${gajiPokok.toLocaleString('id-ID')}</td>
+                        <td>Jabatan: ${jabatanPegawai}</td>
+                    </tr>
+                    <tr>
+                        <td>Tunjangan Jabatan</td>
+                        <td>Rp ${tunjanganJabatan.toLocaleString('id-ID')}</td>
+                        <td>15% dari gaji pokok</td>
+                    </tr>
+                    <tr>
+                        <td>Tunjangan Keluarga</td>
+                        <td>Rp ${tunjanganKeluarga.toLocaleString('id-ID')}</td>
+                        <td>Status: ${statusPegawai} (20% dari gaji pokok)</td>
+                    </tr>
+                    <tr>
+                        <td>BPJS</td>
+                        <td>Rp ${bpjs.toLocaleString('id-ID')}</td>
+                        <td>10% dari gaji pokok (potongan)</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td><strong>TOTAL GAJI</strong></td>
+                        <td><strong>Rp ${totalGaji.toLocaleString('id-ID')}</strong></td>
+                        <td>Gaji Pokok + Tunjangan - BPJS</td>
+                    </tr>
+                </tfoot>
+            </table>
+        `;
+
+        // Menampilkan hasil di console browser (tekan F12 untuk melihat)
+        console.log("=== TUGAS 2: DATA PEGAWAI ===");
+        console.log("Nama:", namaPegawai);
+        console.log("Umur:", umurPegawai, "tahun");
+        console.log("Jabatan:", jabatanPegawai);
+        console.log("Status:", statusPegawai);
+        console.log("Gaji Pokok: Rp", gajiPokok.toLocaleString('id-ID'));
+        console.log("Tunjangan Jabatan: Rp", tunjanganJabatan.toLocaleString('id-ID'));
+        console.log("Tunjangan Keluarga: Rp", tunjanganKeluarga.toLocaleString('id-ID'));
+        console.log("BPJS: Rp", bpjs.toLocaleString('id-ID'));
+        console.log("Total Gaji: Rp", totalGaji.toLocaleString('id-ID'));
     </script>
 </body>
 </html>

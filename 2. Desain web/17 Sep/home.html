@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>EXO Members</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { 
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #16213e 100%);
+            padding: 30px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 42px;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 15px;
+            text-shadow: 0 0 30px rgba(138,43,226,0.6);
+        }
+        .subtitle {
+            text-align: center;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        .member-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(138,43,226,0.3);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .member-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(138,43,226,0.4);
+            border-color: rgba(138,43,226,0.8);
+        }
+        .member-photo {
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            position: relative;
+        }
+        .member-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        .member-card:hover .member-photo img {
+            transform: scale(1.1);
+        }
+        .member-info {
+            padding: 20px;
+            background: rgba(0,0,0,0.3);
+        }
+        .member-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+        .member-role {
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+        }
+        .member-bio {
+            margin-top: 15px;
+            padding: 20px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+            font-size: 14px;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.8;
+            display: none;
+        }
+        .member-card.active .member-bio {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .toggle-btn {
+            margin-top: 10px;
+            padding: 8px 20px;
+            background: rgba(138,43,226,0.6);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+        .toggle-btn:hover {
+            background: rgba(138,43,226,0.9);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>EXO Members</h1>
+        <p class="subtitle">9 Member dengan Bakat Luar Biasa</p>
+        
+        <div class="members-grid">
+            <!-- Suho -->
+            <div class="member-card" onclick="toggleBio(this)">
+                <div class="member-photo">
+                    <a href="https://instagram.com/kimjuncotton" target="_blank">
+                        <img src="https://i.pinimg.com/736x/3f/90/28/3f9028063931775d6defee428b6760c3.jpg" alt="Suho">
+                    </a>
+                </div>
+                <div class="member-info">
+                    <div class="member-name">Suho</div>
+                    <div class="member-role">Leader, Main Vocalist</div>
+                    <button class="toggle-btn">Lihat Profil</button>
+                </div>
+                <div class="member-bio">
+                    <strong>Nama Lengkap:</strong> Kim Jun-myeon<br>
+                    <strong>Tanggal Lahir:</strong> 22 Mei 1991<br>
+                    <strong>Posisi:</strong> Leader, Main Vocalist<br>
+                    <strong>Fakta:</strong> Suho dikenal sebagai leader yang bertanggung jawab dan memiliki suara yang lembut. Ia juga aktif sebagai aktor musical.
+                </div>
+            </div>
+
+            <!-- Chanyeol -->
+            <div class="member-card" onclick="toggleBio(this)">
+                <div class="member-photo">
+                    <a href="https://instagram.com/real__pcy" target="_blank">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSd1v6I8b0H5JDD09yxNi_RcsEN1xFJiABCuKqMzfYxFQ&s=10" alt="Chanyeol">
+                    </a>
+                </div>
+                <div class="member-info">
+                    <div class="member-name">Chanyeol</div>
+                    <div class="member-role">Main Rapper, Lead Vocalist, Visual</div>
+                    <button class="toggle-btn">Lihat Profil</button>
+                </div>
+                <div class="member-bio">
+                    <strong>Nama Lengkap:</strong> Park Chanyeol<br>
+                    <strong>Tanggal Lahir:</strong> 27 November 1992<br>
+                    <strong>Posisi:</strong> Main Rapper, Lead Vocalist<br>
+                    <strong>Fakta:</strong> Chanyeol adalah member tertinggi dan memiliki talenta dalam bermusik. Ia juga anggota sub-unit EXO-SC.
+                </div>
+            </div>
+
+            <!-- D.O. -->
+            <div class="member-card" onclick="toggleBio(this)">
+                <div class="member-photo">
+                    <a href="https://instagram.com/d.o.hkyungsoo" target="_blank">
+                        <img src="https://i.pinimg.com/1200x/15/bb/4d/15bb4d972a24820d4a3bf1e76628015e.jpg" alt="D.O.">
+                    </a>
+                </div>
+                <div class="member-info">
+                    <div class="member-name">D.O</div>
+                    <div class="member-role">Main Vocalist</div>
+                    <button class="toggle-btn">Lihat Profil</button>
+                </div>
+                <div class="member-bio">
+                    <strong>Nama Lengkap:</strong> Do Kyung-soo<br>
+                    <strong>Tanggal Lahir:</strong> 12 Januari 1993<br>
+                    <strong>Posisi:</strong> Main Vocalist<br>
+                    <strong>Fakta:</strong> D.O. dikenal dengan vokal yang powerful dan stabil. Ia juga aktor sukses dengan berbagai film box office.
+                </div>
+            </div>
+
+            <!-- Chen -->
+            <div class="member-card" onclick="toggleBio(this)">
+                <div class="member-photo">
+                    <a href="https://youtube.com/@chen" target="_blank">
+                        <img src="https://i.pinimg.com/736x/19/ad/cc/19adccc60a85935442d0119e3b6cebae.jpg" alt="Chen">
+                    </a>
+                </div>
+                <div class="member-info">
+                    <div class="member-name">Chen</div>
+                    <div class="member-role">Main Vocalist</div>
+                    <button class="toggle-btn">Lihat Profil</button>
+                </div>
+                <div class="member-bio">
+                    <strong>Nama Lengkap:</strong> Kim Jong-dae<br>
+                    <strong>Tanggal Lahir:</strong> 21 September 1992<br>
+                    <strong>Posisi:</strong> Main Vocalist<br>
+                    <strong>Fakta:</strong> Chen memiliki range vokal yang sangat luas dan tinggi. Ia juga aktif sebagai solois dengan album yang sukses.
+                </div>
+            </div>
+
+            <!-- Baekhyun -->
+            <div class="member-card" onclick="toggleBio(this)">
+                <div class="member-photo">
+                    <a href="https://instagram.com/baekhyunee_exo" target="_blank">
+                        <img src="https://i.pinimg.com/736x/27/90/08/2790083fe3671fb1bccdf771001fd48e.jpg" alt="Baekhyun">
+                    </a>
+                </div>
+                <div class="member-info">
+                    <div class="member-name">Baekhyun</div>
+                    <div class="member-role">Main Vocalist, Lead Dancer</div>
+                    <button class="toggle-btn">Lihat Profil</button>
+                </div>
+                <div class="member-bio">
+                    <strong>Nama Lengkap:</strong> Byun Baekhyun<br>
+                    <strong>Tanggal Lahir:</strong> 6 Mei 1992<br>
+                    <strong>Posisi:</strong> Main Vocalist, Lead Dancer<br>
+                    <strong>Fakta:</strong> Baekhyun adalah solois terlaris di Korea Selatan dengan berbagai hit OST drama populer.
+                </div>
+            </div>
+
+            <!-- Xiumin -->
+            <div class="member-card" onclick="toggleBio(this)">
+                <div class="member-photo">
+                    <a href="https://instagram.com/e_xiu_o" target="_blank">
+                        <img src="https://i.pinimg.com/736x/94/27/91/9427914e28733fab96655d3daed3bbdf.jpg" alt="Xiumin">
+                    </a>
+                </div>
+                <div class="member-info">
+                    <div class="member-name">Xiumin</div>
+                    <div class="member-role">Lead Vocalist, Lead Dancer</div>
+                    <button class="toggle-btn">Lihat Profil</button>
+                </div>
+                <div class="member-bio">
+                    <strong>Nama Lengkap:</strong> Kim Min-seok<br>
+                    <strong>Tanggal Lahir:</strong> 26 Maret 1990<br>
+                    <strong>Posisi:</strong> Lead Vocalist, Lead Dancer<br>
+                    <strong>Fakta:</strong> Xiumin adalah member tertua (macro) dengan visual yang tetap muda. Ia juga aktor musical yang handal.
+                </div>
+            </div>
+
+            <!-- Kai -->
+            <div class="member-card" onclick="toggleBio(this)">
+                <div class="member-photo">
+                    <a href="https://instagram.com/zkdlin" target="_blank">
+                        <img src="https://i.pinimg.com/736x/8e/94/53/8e94539d6cdc25cb7cf22ef2a40234e6.jpg" alt="Kai">
+                    </a>
+                </div>
+                <div class="member-info">
+                    <div class="member-name">Kai</div>
+                    <div class="member-role">Main Dancer, Sub Vocalist, Visual, Center</div>
+                    <button class="toggle-btn">Lihat Profil</button>
+                </div>
+                <div class="member-bio">
+                    <strong>Nama Lengkap:</strong> Kim Jong-in<br>
+                    <strong>Tanggal Lahir:</strong> 14 Januari 1994<br>
+                    <strong>Posisi:</strong> Main Dancer, Sub Vocalist, Visual, Center<br>
+                    <strong>Fakta:</strong> Kai dikenal sebagai salah satu dancer terbaik di K-Pop dengan stage presence yang kuat.
+                </div>
+            </div>
+
+            <!-- Sehun -->
+            <div class="member-card" onclick="toggleBio(this)">
+                <div class="member-photo">
+                    <a href="https://instagram.com/oohsehun" target="_blank">
+                        <img src="https://i.pinimg.com/1200x/01/d8/23/01d8236a21be5696a62350853b6be338.jpg" alt="Sehun">
+                    </a>
+                </div>
+                <div class="member-info">
+                    <div class="member-name">Sehun</div>
+                    <div class="member-role">Lead Dancer, Rapper, Visual, Maknae</div>
+                    <button class="toggle-btn">Lihat Profil</button>
+                </div>
+                <div class="member-bio">
+                    <strong>Nama Lengkap:</strong> Oh Se-hun<br>
+                    <strong>Tanggal Lahir:</strong> 12 April 1994<br>
+                    <strong>Posisi:</strong> Lead Dancer, Rapper, Visual, Maknae<br>
+                    <strong>Fakta:</strong> Sehun adalah member termuda (maknae) dengan visual yang menawan. Ia juga anggota EXO-SC.
+                </div>
+            </div>
+
+            <!-- Lay -->
+            <div class="member-card" onclick="toggleBio(this)">
+                <div class="member-photo">
+                    <a href="https://instagram.com/layzhang" target="_blank">
+                        <img src="https://i.pinimg.com/736x/a1/3f/85/a13f853efc7100f6bec245badf1a4634.jpg" alt="Lay">
+                    </a>
+                </div>
+                <div class="member-info">
+                    <div class="member-name">Lay</div>
+                    <div class="member-role">Main Dancer, Lead Vocalist, Producer</div>
+                    <button class="toggle-btn">Lihat Profil</button>
+                </div>
+                <div class="member-bio">
+                    <strong>Nama Lengkap:</strong> Zhang Yixing<br>
+                    <strong>Tanggal Lahir:</strong> 7 Oktober 1991<br>
+                    <strong>Posisi:</strong> Main Dancer, Lead Vocalist, Producer<br>
+                    <strong>Fakta:</strong> Lay aktif kembali bersama EXO untuk promosi dan tur 2026. Ia adalah producer dan solois sukses di China.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleBio(card) {
+            card.classList.toggle('active');
+            const btn = card.querySelector('.toggle-btn');
+            if (card.classList.contains('active')) {
+                btn.textContent = 'Tutup Profil';
+            } else {
+                btn.textContent = 'Lihat Profil';
+            }
+        }
+    </script>
+</body>
+</html>

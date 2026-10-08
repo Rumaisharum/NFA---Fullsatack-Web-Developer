@@ -1,4 +1,6 @@
-// Deklarasi 10 Data dengan Array of Object
+// TUGAS 6: DATA USER
+// 10 Data dideklarasikan dengan Array of Objec
+
 const users = [
     { nama: "Budi Santoso", umur: 20, alamat: "Jl. Merdeka No. 1", email: "budi@email.com" },
     { nama: "Siti Aminah", umur: 22, alamat: "Jl. Sudirman No. 2", email: "siti@email.com" },

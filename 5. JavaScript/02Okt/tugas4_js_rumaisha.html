@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas 4 JavaScript - Sistem Manajemen Transportasi (OOP)</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #8e44ad;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #8e44ad;
+        }
+        .section {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background: #8e44ad;
+            color: white;
+        }
+        tr:hover {
+            background: #f4ecf7;
+        }
+        .info {
+            background: #f4ecf7;
+            padding: 15px;
+            border-left: 4px solid #8e44ad;
+            margin: 10px 0;
+        }
+        .success {
+            color: #27ae60;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>🚗 Tugas 4 - Sistem Manajemen Transportasi (OOP)</h1>
+    <div id="output-container"></div>
+
+    <script>
+        // TUGAS 4: SISTEM MANAJEMEN TRANSPORTASI
+        // Menggunakan Object-Oriented Programming (OOP)
+
+        // 1. Class Kendaraan
+        class Kendaraan {
+            constructor(jenis, platNomor, hargaSewa) {
+                this.jenis = jenis;
+                this.platNomor = platNomor;
+                this.hargaSewa = hargaSewa;
+            }
+        }
+
+        // 2. Class Pelanggan dengan properti nama, nomorTelepon, dan kendaraanDisewa
+        class Pelanggan {
+            constructor(nama, nomorTelepon) {
+                this.nama = nama;
+                this.nomorTelepon = nomorTelepon;
+                this.kendaraanDisewa = null; // Default belum menyewa
+            }
+
+            // Metode untuk mencatat transaksi penyewaan kendaraan
+            sewaKendaraan(kendaraan) {
+                this.kendaraanDisewa = kendaraan;
+                console.log(`[Transaksi] ${this.nama} menyewa ${kendaraan.jenis} (${kendaraan.platNomor})`);
+            }
+
+            // Metode untuk mengembalikan kendaraan
+            kembalikanKendaraan() {
+                if (this.kendaraanDisewa) {
+                    let kendaraan = this.kendaraanDisewa;
+                    this.kendaraanDisewa = null;
+                    console.log(`[Pengembalian] ${this.nama} mengembalikan ${kendaraan.jenis}`);
+                    return kendaraan;
+                }
+                return null;
+            }
+        }
+
+        // 3. Class SistemManajemen untuk mengelola data
+        class SistemManajemen {
+            constructor() {
+                this.daftarPelanggan = [];
+                this.daftarKendaraan = [];
+            }
+
+            // Metode untuk menambah kendaraan
+            tambahKendaraan(kendaraan) {
+                this.daftarKendaraan.push(kendaraan);
+            }
+
+            // Metode untuk menambah pelanggan
+            tambahPelanggan(pelanggan) {
+                this.daftarPelanggan.push(pelanggan);
+            }
+
+            // Metode untuk menyewakan kendaraan
+            sewaKendaraan(namaPelanggan, platNomor) {
+                let pelanggan = this.daftarPelanggan.find(p => p.nama === namaPelanggan);
+                let kendaraan = this.daftarKendaraan.find(k => k.platNomor === platNomor);
+                
+                if (pelanggan && kendaraan) {
+                    pelanggan.sewaKendaraan(kendaraan);
+                    return `✅ ${pelanggan.nama} berhasil menyewa ${kendaraan.jenis} (${kendaraan.platNomor})`;
+                }
+                return "❌ Pelanggan atau kendaraan tidak ditemukan";
+            }
+
+            // Metode untuk menampilkan daftar pelanggan yang sedang menyewa
+            tampilkanDaftarPenyewa() {
+                // Filter hanya pelanggan yang kendaraanDisewa-nya tidak null
+                const penyewaAktif = this.daftarPelanggan.filter(p => p.kendaraanDisewa !== null);
+
+                let html = `
+                    <div class="section">
+                        <h2>📋 Daftar Pelanggan yang Sedang Menyewa</h2>
+                `;
+
+                if (penyewaAktif.length === 0) {
+                    html += `<p>Tidak ada pelanggan yang sedang menyewa kendaraan.</p>`;
+                } else {
+                    html += `
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Pelanggan</th>
+                                    <th>Nomor Telepon</th>
+                                    <th>Kendaraan</th>
+                                    <th>Plat Nomor</th>
+                                    <th>Harga Sewa/Hari</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    `;
+
+                    penyewaAktif.forEach((p, index) => {
+                        html += `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td><strong>${p.nama}</strong></td>
+                                <td>${p.nomorTelepon}</td>
+                                <td>${p.kendaraanDisewa.jenis}</td>
+                                <td>${p.kendaraanDisewa.platNomor}</td>
+                                <td>Rp ${p.kendaraanDisewa.hargaSewa.toLocaleString('id-ID')}</td>
+                            </tr>
+                        `;
+                    });
+
+                    html += `</tbody></table>`;
+                }
+                
+                html += `</div>`;
+                return html;
+            }
+
+            // Metode untuk menampilkan semua kendaraan
+            tampilkanSemuaKendaraan() {
+                let html = `
+                    <div class="section">
+                        <h2>🚗 Daftar Kendaraan Tersedia</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Jenis</th>
+                                    <th>Plat Nomor</th>
+                                    <th>Harga Sewa/Hari</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+
+                this.daftarKendaraan.forEach(k => {
+                    let disewa = this.daftarPelanggan.some(p => p.kendaraanDisewa && p.kendaraanDisewa.platNomor === k.platNomor);
+                    html += `
+                        <tr>
+                            <td>${k.jenis}</td>
+                            <td>${k.platNomor}</td>
+                            <td>Rp ${k.hargaSewa.toLocaleString('id-ID')}</td>
+                            <td>${disewa ? '🔴 Disewa' : ' Tersedia'}</td>
+                        </tr>
+                    `;
+                });
+
+                html += `</tbody></table></div>`;
+                return html;
+            }
+        }
+
+        // DEMO PENGGUNAAN SISTEM
+        const sistem = new SistemManajemen();
+
+        // Tambah kendaraan
+        sistem.tambahKendaraan(new Kendaraan("Toyota Avanza", "B 1234 CD", 350000));
+        sistem.tambahKendaraan(new Kendaraan("Honda Vario", "B 5678 EF", 100000));
+        sistem.tambahKendaraan(new Kendaraan("Daihatsu Xenia", "B 9012 GH", 350000));
+        sistem.tambahKendaraan(new Kendaraan("Yamaha NMAX", "B 3456 IJ", 120000));
+
+        // Tambah pelanggan
+        sistem.tambahPelanggan(new Pelanggan("Budi Santoso", "0812-3456-7890"));
+        sistem.tambahPelanggan(new Pelanggan("Siti Aminah", "0813-9876-5432"));
+        sistem.tambahPelanggan(new Pelanggan("Andi Pratama", "0857-1122-3344"));
+
+        // Transaksi sewa
+        sistem.sewaKendaraan("Budi Santoso", "B 1234 CD");
+        sistem.sewaKendaraan("Andi Pratama", "B 5678 EF");
+
+        // Tampilkan hasil
+        const outputContainer = document.getElementById('output-container');
+        outputContainer.innerHTML = sistem.tampilkanSemuaKendaraan() + sistem.tampilkanDaftarPenyewa();
+
+        console.log("--- Log Sistem Manajemen Transportasi ---");
+        console.log("Total Kendaraan:", sistem.daftarKendaraan.length);
+        console.log("Total Pelanggan:", sistem.daftarPelanggan.length);
+        console.log("Penyewa Aktif:", sistem.daftarPelanggan.filter(p => p.kendaraanDisewa !== null).length);
+    </script>
+</body>
+</html>
