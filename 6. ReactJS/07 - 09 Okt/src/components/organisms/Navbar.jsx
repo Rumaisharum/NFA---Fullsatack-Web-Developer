@@ -23,6 +23,14 @@ function Navbar() {
             <li className="nav-item">
               <NavLink 
                 className={({ isActive }) => `nav-link ${isActive ? 'active-custom' : ''}`} 
+                to="/book"
+              >
+                Books
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink 
+                className={({ isActive }) => `nav-link ${isActive ? 'active-custom' : ''}`} 
                 to="/team"
               >
                 Team
