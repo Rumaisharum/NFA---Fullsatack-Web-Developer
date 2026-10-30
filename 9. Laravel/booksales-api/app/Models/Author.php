@@ -1,7 +1,12 @@
 <?php
 namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
 class Author {
     public static function getAll() {
+        
         return [
             ['id' => 1, 'name' => 'J.K. Rowling', 'bio' => 'Penulis Harry Potter'],
             ['id' => 2, 'name' => 'Tere Liye', 'bio' => 'Penulis Indonesia'],
@@ -10,4 +15,7 @@ class Author {
             ['id' => 5, 'name' => 'Raditya Dika', 'bio' => 'Komika & Penulis'],
         ];
     }
+
+
+    
 }
