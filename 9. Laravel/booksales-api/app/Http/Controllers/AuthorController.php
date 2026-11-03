@@ -8,49 +8,72 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthorController extends Controller
 {
-    // 1. READ ALL DATA (Sudah benar, dipertahankan)
+    // 1. READ ALL (Sudah ada)
     public function index()
     {
         $authors = Author::all();
-        
         if ($authors->isEmpty()) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Resource data not found'
-            ], 200);
+            return response()->json(['success' => true, 'message' => 'Resource data not found'], 200);
         }
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Get all resources',
-            'data' => $authors
-        ], 200);
+        return response()->json(['success' => true, 'message' => 'Get all resources', 'data' => $authors], 200);
     }
 
-    // 2. CREATE DATA (Ditambahkan)
+    // 2. CREATE (Sudah ada)
     public function store(Request $request)
     {
-        // Validasi data
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:100',
             'bio' => 'required|string',
         ]);
 
-        // Jika validasi gagal
         if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => $validator->errors()
-            ], 422);
+            return response()->json(['success' => false, 'message' => $validator->errors()], 422);
         }
 
-        // Jika validasi sukses, simpan ke database
         $author = Author::create($request->all());
+        return response()->json(['success' => true, 'message' => 'Resource added successfully', 'data' => $author], 201);
+    }
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Resource added successfully',
-            'data' => $author
-        ], 201);
+    // 3. SHOW (TAMBAHAN BARU)
+    public function show($id)
+    {
+        $author = Author::find($id);
+        if (!$author) {
+            return response()->json(['success' => false, 'message' => 'Resource not found'], 404);
+        }
+        return response()->json(['success' => true, 'message' => 'Get resource detail', 'data' => $author], 200);
+    }
+
+    // 4. UPDATE (TAMBAHAN BARU)
+    public function update(Request $request, $id)
+    {
+        $author = Author::find($id);
+        if (!$author) {
+            return response()->json(['success' => false, 'message' => 'Resource not found'], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:100',
+            'bio' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'message' => $validator->errors()], 422);
+        }
+
+        $author->update($request->all());
+        return response()->json(['success' => true, 'message' => 'Resource updated successfully', 'data' => $author], 200);
+    }
+
+    // 5. DESTROY (TAMBAHAN BARU)
+    public function destroy($id)
+    {
+        $author = Author::find($id);
+        if (!$author) {
+            return response()->json(['success' => false, 'message' => 'Resource not found'], 404);
+        }
+
+        $author->delete();
+        return response()->json(['success' => true, 'message' => 'Resource deleted successfully'], 200);
     }
 }
